@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	<meta charset="UTF-8">
+	<title>Reconhecimento de voz</title>
+	<style type="text/css">
+		@import url("https://fonts.googleapis.com/css?family=Google+Sans")
+		* {
+			font-family: "Google Sans"
+
+		}
+		.luz {
+			background: #212121;
+			color: #FFFFFF;
+		}
+	</style>
+</head>
+<body align="center">
+	<h1>Aperte para falar algo...</h1>
+	<p>Diga "luz" para ativar/desativar o modo noturno</p>
+	<button id="btn-comecar">Começar</button>
+
+	<script>
+		if (window.SpeechRecognition || window.webkitSpeechRecognition){
+			var sr = window.SpeechRecognition || window.webkitSpeechRecognition;
+			var recognition = new sr();
+		}
+		else{
+			alert("Seu navegador não é compatível com essa funcionalidade");
+		}
+
+		const btn = document.querySelector("#btn-comecar");
+		btn.addEventListener("click", function(){
+			recognition.start();
+		});
+
+
+		recognition.addEventListener("result", function(e){
+			var result = e.results[0][0].transcript;
+			alert(result);
+			if (result.toLowerCase() === "luz"){
+				document.querySelector("body").classList.toggle("luz");
+			}
+		});
+	</script>
+</body>	
+</html>
